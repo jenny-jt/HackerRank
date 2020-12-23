@@ -90,3 +90,76 @@ def freqQuery(queries):
             results.append(1 if freqs[num] else 0)
 
     return results
+
+########### Count Triplets ############
+# You are given an array and you need to find number of tripets of indices
+# such that the elements at those indices are in geometric progression 
+# for a given common ratio. i < j < k
+
+def countTriplets(arr, r):
+    """ given arr with ratio r, return number of triplets of indices
+    """
+# arr: 4 2 1 
+# k j i 
+# j = i*2
+# k = j*2
+ 
+# 1 2 4         
+# i j K 
+# 0 1 2
+
+# j = k/2
+# i = j/2
+
+    # loop through array in reverse
+    # 1 5 5 25 125
+    # 125 25 5 5 1
+    # k = 125, j = 25, i = 5
+    
+    if len(arr) <= 2:
+        return 0
+    d_arr = {}
+    d_doubles = {} # key of (j,k) tuple, value of 
+    count = 0
+    
+    # Traversing the array from rear, helps avoid division
+    for i in arr[::-1]:
+        j = r*i
+        k = r*j
+        # case: i is the first element (i, j, k)
+        count += d_doubles.get((j, k), 0)
+
+        # case: i is the second element (i/r, i, i*r)
+        d_doubles[(i, j)] = d_doubles.get((i, j), 0) + d_arr.get(j, 0)
+
+        # case: i is the third element (i/(r*r), i/r, i)
+        d_arr[i] = d_arr.get(i, 0) + 1
+
+    return count
+
+# according to the problem statement, it is only considered a triplet if i < j < k, from left to right, so [4, 2, 1] with r = 2 isn't a triplet.
+# consider this array with a triplet: [1, 2, 4]. if you traverse it normally, you won't know if you have a triplet until you get to the third element: 4. in order to confirm this, you would check that the second element is 4/r, and that the first element is 4/r/r. this uses division
+# the first bullet point in the example he gave states that he wants to avoid division (because it's expensive and can produce floating point numbers). when the array is traversed in reverse, in order to check if you have a triplet, you check that the next element was 4*r, and that the one after that was 4*r*r
+
+# froom discussion
+def countTriplets(arr, r):
+    """given arr with ratio r, return number of triplets of indices
+    """
+    if len(arr) <= 2:
+        return 0
+    map_arr = {}
+    map_doubles = {}
+    count = 0
+    # Traversing the array from rear, helps avoid division
+    for x in arr[::-1]:
+        r_x = r*x
+        r_r_x = r*r_x
+
+        # case: x is the first element (x, x*r, x*r*r)
+        count += map_doubles.get((r_x, r_r_x), 0)
+
+        # case: x is the second element (x/r, x, x*r)
+        map_doubles[(x,r_x)] = map_doubles.get((x,r_x), 0) + map_arr.get(r_x, 0)
+
+        # case: x is the third element (x/(r*r), x/r, x)
+        map_arr[x] = map_arr.get(x, 0) + 1
