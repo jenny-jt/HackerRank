@@ -163,3 +163,29 @@ def countTriplets(arr, r):
 
         # case: x is the third element (x/(r*r), x/r, x)
         map_arr[x] = map_arr.get(x, 0) + 1
+
+######### Strings: Special String again #####
+# string special if all letters same OR all letters except middle are the same
+
+def substrCount(n, s):
+    """ given s, return number of special substrings"""
+    # initial count of len of s, because each letter is a special substring
+    count = n
+    for i, char in enumerate(s):
+        diff_i = None
+        for j in range(i+1, n):
+            if char == s[j]:
+                # if all letters same so far
+                if not diff_i:
+                    count +=1
+                # if length before pivot equals length after pivot
+                #  and letter before(char) equals letter after(s[j])
+                elif j - diff_i == diff_i - i:
+                    count += 1
+                    break
+            else:
+                if not diff_i:
+                    diff_i = j # setting the pivot (one char that can be diff)
+                else:
+                    break # one letter already is diff, can't be special if more diff
+    return count
