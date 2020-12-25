@@ -219,3 +219,29 @@ def isBalanced(s):
     else:
         return("YES")  
 
+########## Stacks: implement q with 2 stacks ############
+class MyQueue(object):
+    def __init__(self):
+        """initialize q using 2 stacks"""
+        # new items append to end
+        self.inbound = []
+        # old items removed from end
+        self.outbound = [] 
+    
+    def peek(self):
+        """return value at front without modifying q"""
+        if not self.outbound:
+            while self.inbound:
+                # add inbound in reversed order to outbound
+                self.outbound.append(self.inbound.pop())
+        return self.outbound[-1]
+                
+    def pop(self):
+        """remove value from the front"""
+        self.peek()
+        return self.outbound.pop()
+        
+    def put(self, value):
+        """insert value at end"""
+        self.inbound.append(value)
+
