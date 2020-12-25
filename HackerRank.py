@@ -189,3 +189,33 @@ def substrCount(n, s):
                 else:
                     break # one letter already is diff, can't be special if more diff
     return count
+
+
+######### Stacks: Balanced Parens #####
+def isBalanced(s):
+    """given string, return YES if parens are balanced, and NO if parens are not balanced"""
+    stack = []
+    d = {"(": ")", "[": "]", "{": "}"}
+
+    for char in s:
+        if not stack:
+            if char in d.values():
+                return("NO")
+            else:
+                stack.append(char)
+        # if stack (so already some open parens)
+        else:
+            # char is closing parens for the top open parens
+            if char in d.values():
+                if char == d[stack[-1]]:
+                    stack.pop()
+                else:
+                    return("NO")
+            else: 
+                stack.append(char)
+
+    if stack:
+        return("NO")
+    else:
+        return("YES")  
+
