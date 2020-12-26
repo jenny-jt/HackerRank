@@ -219,6 +219,7 @@ def isBalanced(s):
     else:
         return("YES")  
 
+
 ########## Stacks: implement q with 2 stacks ############
 class MyQueue(object):
     def __init__(self):
@@ -227,7 +228,7 @@ class MyQueue(object):
         self.inbound = []
         # old items removed from end
         self.outbound = [] 
-    
+
     def peek(self):
         """return value at front without modifying q"""
         if not self.outbound:
@@ -235,13 +236,38 @@ class MyQueue(object):
                 # add inbound in reversed order to outbound
                 self.outbound.append(self.inbound.pop())
         return self.outbound[-1]
-                
+
     def pop(self):
         """remove value from the front"""
         self.peek()
         return self.outbound.pop()
-        
+
     def put(self, value):
         """insert value at end"""
         self.inbound.append(value)
 
+############# Stacks: Largest Rectangle ###############
+def largestRectangle(h):
+    """given array of heights h, return max area"""
+    stack=[]
+    area=0
+    i=0
+
+    while i < len(h):
+        # if stack empty or top height is less than current height
+        if not stack or h[stack[-1]] <= h[i]:
+            # append position
+            stack.append(i)
+            i+=1
+        # if current height is smaller than top height
+        else:
+            top = stack.pop()
+            # h[top] (height value) * (position now - position of top - 1)
+            # area is the larger of these two values. existing area or new area
+            area = max(area, h[top]*(i-stack[-1]-1 if stack else i))
+
+    while stack:
+        top = stack.pop()
+        area = max(area,h[top]*(i-stack[-1]-1 if stack else i))
+
+    return area
