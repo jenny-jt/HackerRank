@@ -246,19 +246,20 @@ class MyQueue(object):
         """insert value at end"""
         self.inbound.append(value)
 
+
 ############# Stacks: Largest Rectangle ###############
 def largestRectangle(h):
     """given array of heights h, return max area"""
-    stack=[]
-    area=0
-    i=0
+    stack = []
+    area = 0
+    i = 0
 
     while i < len(h):
         # if stack empty or top height is less than current height
         if not stack or h[stack[-1]] <= h[i]:
             # append position
             stack.append(i)
-            i+=1
+            i += 1
         # if current height is smaller than top height
         else:
             top = stack.pop()
@@ -268,6 +269,45 @@ def largestRectangle(h):
 
     while stack:
         top = stack.pop()
-        area = max(area,h[top]*(i-stack[-1]-1 if stack else i))
+        area = max(area, h[top]*(i-stack[-1]-1 if stack else i))
 
     return area
+
+###### Stacks: Min Max Riddle ######
+
+# using array, need to optimize to pass last 3 test cases
+def riddle(arr):
+    """given arr, return an array containing the max value of the minimums 
+        for each window size
+    """
+
+    size = 0
+    arr_max = []
+    
+    while size < len(arr):
+        max_w = 0
+        for i in range(len(arr)):
+            if (i + 1 + size) <= len(arr):
+                window = arr[i: i + 1 + size]
+                w_min = min(window)
+                max_w = max(max_w, w_min)
+        arr_max.append(max_w)
+        size += 1
+
+    return(arr_max)
+
+###### Recursion: Fibonacci Numbers######
+why n-1 + n-2
+
+def fibonacci(n):
+    cache = {}
+    def fib(n):
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        if n not in cache:
+            cache[n] = fib(n-1) + fib(n-2)
+        return cache[n]
+            
+    return fib(n)
