@@ -296,11 +296,11 @@ def riddle(arr):
 
     return(arr_max)
 
-###### Recursion: Fibonacci Numbers######
-why n-1 + n-2
 
+###### Recursion: Fibonacci Numbers######
 def fibonacci(n):
     cache = {}
+
     def fib(n):
         if n == 0:
             return 0
@@ -309,5 +309,27 @@ def fibonacci(n):
         if n not in cache:
             cache[n] = fib(n-1) + fib(n-2)
         return cache[n]
-            
+
     return fib(n)
+
+
+###### Sorting: Mark and Toys ######
+def maximumToys(prices, k):
+    """given list of prices and budget, return max toys"""
+    # may be multiple amounts of toys per k
+    # have k be key, and amounts as val
+    # for prices subtract amount of price from k and look for matching price
+    d = {}
+    prices.sort()
+    count = 0
+    
+    for price in prices:
+        if price > k:
+            break
+        elif price == k:
+            d[k] = price
+        else:
+            count += 1
+            k = k - price
+            continue
+    return count
