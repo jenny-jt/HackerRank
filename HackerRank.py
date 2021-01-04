@@ -333,3 +333,26 @@ def maximumToys(prices, k):
             k = k - price
             continue
     return count
+
+
+###### Sorting: Comoparator ######
+class Player:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+        
+    def __repr__(self):
+        return {"Name:", self.name, "Score:", self.score}
+        
+    def comparator(a, b):
+        if a.score != b.score:
+            # need to return -1 because sorting in desc not asc order
+            if a.score > b.score:
+                return -1
+            elif a.score < b.score:
+                return 1
+        else:
+            if a.name > b.name:
+                return 1
+            if a.name < b.name:
+                return -1
