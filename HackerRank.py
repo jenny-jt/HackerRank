@@ -349,10 +349,32 @@ class Player:
             # need to return -1 because sorting in desc not asc order
             if a.score > b.score:
                 return -1
-            elif a.score < b.score:
+            else:
                 return 1
         else:
             if a.name > b.name:
                 return 1
-            if a.name < b.name:
+            else:
                 return -1
+
+
+###### Sorting: Fraudulent Activity Notification ######
+
+# need to optimize
+def activityNotifications(expenditure, d):
+    """return number of alerts given d trailing days and array expenditure"""
+    # only need to check from index d to end of expenditure list
+    # calculate median of expenditures in d
+    # compare to expenditure[i]
+    # initialize alert count
+    alert = 0
+
+    for i in range(d, len(expenditure)):
+        # calculate median, how optimize this
+        m = sum(expenditure[i-d:i])/(d/2)
+        # incremenent alert if median*2 <= that day's expenditure
+        if m <= expenditure[i]:
+            alert += 1
+            
+    return alert
+
