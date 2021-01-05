@@ -451,3 +451,51 @@ def reverse(head):
         temp = curr
         curr = curr.prev
     return temp
+
+
+###### LL: intersection ######
+def findMergeNode(head1, head2):
+    """given 2 ll, return data value of intersecting node. otherwise return none"""
+    # find lengths and tails of each list
+    # advance longer list by the diff in lengths
+    curr1 = head1
+    curr2 = head2
+    len1, len2, diff = 0, 0, 0
+    
+    while curr1:
+        len1 += 1
+        curr1 = curr1.next
+        
+    while curr2:
+        len2 += 1
+        curr2 = curr2.next
+    
+# if tails not same, then no intersection
+    if curr1 != curr2:
+        return
+    
+# if diff lengths, find diff   
+    if len1 - len2 != 0:
+        diff +=  (len1 - len2)
+        print("diff", diff, "l1", len1, "l2", len2)
+        
+# reset to beginning
+    curr1 = head1
+    curr2 = head2
+    
+# if diff lengths:
+    # if 1 longer than 2
+    if diff > 0:
+        for i in range(diff):
+            curr1 = curr1.next
+    # if 2 longer than 1
+    if diff < 0:
+        for i in range(abs(diff)):
+            curr2 = curr2.next
+        
+    # traverse lists from this starting point. when curr1 and curr2 are equal, then return that value
+    while curr1 and curr2:
+        if curr1 == curr2:
+            return curr1.data
+        curr1 = curr1.next
+        curr2 = curr2.next
