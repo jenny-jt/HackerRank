@@ -407,7 +407,8 @@ def insertNodeAtPosition(head, data, position):
 ###### LL: Insert node into sorted DLL ######
 def sortedInsert(curr, data):
     new = DoublyLinkedListNode(data)
-    
+
+    # list is empty
     if not curr:
         return new
     elif curr.data > data:
@@ -419,6 +420,34 @@ def sortedInsert(curr, data):
     # curr.data < data
     else:
         curr.next = sortedInsert(curr.next, data)
-    
+
     return curr
-        
+
+
+###### LL: Reverse DLL ######
+
+# recursive solution
+def reverse(curr):
+    """given a DLL, reverse it and return the head"""
+    # the list was empty
+    if not curr:
+        return curr
+    curr.next, curr.prev = curr.prev, curr.next
+    print("curr", curr.data)
+    # this means that we have reached the original tail, return where we are now
+    if not curr.prev:
+        print("curr at end", curr.data)
+        return curr
+    # if not, keep swapping prev and next
+    print("curr prev", curr.prev.data)
+    return reverse(curr.prev)
+
+# iterative solution
+def reverse(head):
+    """given a DLL, reverse it and return the head"""
+    curr = temp = head
+    while curr:
+        curr.prev, curr.next = curr.next, curr.prev
+        temp = curr
+        curr = curr.prev
+    return temp
