@@ -378,3 +378,47 @@ def activityNotifications(expenditure, d):
             
     return alert
 
+
+###### LL: Insert node at specific position ######
+class Node:
+    def __init__(self, data, next):
+        self.data = data
+        self.next = next
+        
+def insertNodeAtPosition(head, data, position):
+    """insert data at position, given head of ll"""
+    
+    if position == 0:
+        new = Node(data, None)
+        return new
+    
+    curr = head
+    
+    for i in range(position-1):
+        curr = curr.next
+    
+    temp = curr.next
+    new = Node(data, temp)
+    curr.next = new
+
+    return head
+
+
+###### LL: Insert node into sorted DLL ######
+def sortedInsert(curr, data):
+    new = DoublyLinkedListNode(data)
+    
+    if not curr:
+        return new
+    elif curr.data > data:
+        # if curr is bigger than data, insert new node before
+        new.prev = curr.prev
+        new.next = curr
+        curr.prev = new
+        return new
+    # curr.data < data
+    else:
+        curr.next = sortedInsert(curr.next, data)
+    
+    return curr
+        
