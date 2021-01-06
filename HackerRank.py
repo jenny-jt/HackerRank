@@ -562,3 +562,26 @@ def lca(root, v1, v2):
         return lca(root.left, v1, v2)
     # if root is in between v1 and v2, because BST, then is lca
     return root
+
+###### Tree: is BST ######
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def checkBST(node, lv=None, rv=None):
+    if not node:
+        return True
+    # if curr (L) node data is bigger or equal to parent node's data:
+    if lv and node.data >= lv: 
+        return False
+    # if curr (R) node data is smaller or equal to parent node's data:
+    if rv and node.data <= rv:
+        return False
+    # otherwise, check left node and right node
+    # checking node.left, set left value to current node data
+        # if value of node.left is larger than current node data, then return False
+    # checking node.right, set right value to current node data
+        # if value of node.right is smaller than current node data, then return False
+    return checkBST(node.left,node.data,rv) and checkBST(node.right,lv,node.data)
