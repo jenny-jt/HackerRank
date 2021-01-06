@@ -499,3 +499,51 @@ def findMergeNode(head1, head2):
             return curr1.data
         curr1 = curr1.next
         curr2 = curr2.next
+
+
+###### LL: cycle ######
+def has_cycle(head):
+    """given random ll, return true if contains cycle, otherwise return false"""
+
+    # use 2 pointers, one slow and one fast
+    # start fast one on the second node, otherwise will always return true
+    curr1 = head.next
+    curr2 = head
+
+    # if 2 pointers end up at the same point eventually, then return True
+    # will never reach none if there is a cycle
+    while curr1 and curr2:
+        if curr1 == curr2:
+            return True
+        curr1 = curr1.next
+        curr2 = curr2.next.next
+
+    return False
+
+
+###### Greedy: Minimum Absolute Difference in Array ######
+def minimumAbsoluteDifference(arr):
+    """given arr of ints, return min absolute diff"""
+    # if sort, then least is probably between first and second elements
+    arr.sort()
+    min_diff = abs(arr[0] - arr[1])
+    for i in range(len(arr)-1):
+        a_diff = abs(arr[i]-arr[i+1])
+        min_diff = min(min_diff, a_diff)
+
+    return min_diff
+
+
+###### Tree: Height of Binary Tree ######
+# class TreeNode:
+#       def __init__(self,info):
+#           self.info = info
+#           self.left = None
+#           self.right = None
+
+def height(root):
+    """given tree, return height as int"""
+    if not root:
+        return -1
+    # max of either left or right subtrees, plus the root level
+    return(max(height(root.left), height(root.right)) + 1)
