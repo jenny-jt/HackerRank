@@ -547,3 +547,18 @@ def height(root):
         return -1
     # max of either left or right subtrees, plus the root level
     return(max(height(root.left), height(root.right)) + 1)
+
+
+###### Tree: BST:  Lowest Common Ancestor ######
+def lca(root, v1, v2):
+    """given ref to root, find the lca of v1 and v2, return reference to lca"""
+    if root is None:
+        return None
+    # if root is smaller than v1 and v2, check right node
+    if root.info < v1 and root.info < v2:
+        return lca(root.right, v1, v2)
+    # if root is bigger than v1 and v2, check left node
+    if root.info > v1 and root.info > v2:
+        return lca(root.left, v1, v2)
+    # if root is in between v1 and v2, because BST, then is lca
+    return root
