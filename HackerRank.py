@@ -573,8 +573,9 @@ class node:
 def checkBST(node, lv=None, rv=None):
     if not node:
         return True
+    # need if lv, because will be none if checking right so only do this if lv is defined
     # if curr (L) node data is bigger or equal to parent node's data:
-    if lv and node.data >= lv: 
+    if lv and node.data >= lv:
         return False
     # if curr (R) node data is smaller or equal to parent node's data:
     if rv and node.data <= rv:
@@ -585,3 +586,42 @@ def checkBST(node, lv=None, rv=None):
     # checking node.right, set right value to current node data
         # if value of node.right is smaller than current node data, then return False
     return checkBST(node.left,node.data,rv) and checkBST(node.right,lv,node.data)
+
+###### Recursion: SuperDigit ######
+def superDigit(n, k):
+    """given string n and int k, return superdigit of n*k"""
+    # p is sum of n digits
+    p = sum(map(int, list(n)))
+
+    # helper function that takes in int
+    def digitSum(p):
+        # if p is single digit, return p
+        if p < 10:
+            return p
+        # if not, then sum up digits of p and check again
+        return digitSum(sum(map(int, list(str(p)))))
+
+    if k == 1:
+        return digitSum(p)
+    else:
+        return digitSum(p*k)
+
+###### Recursion: Davis' Staircase ######
+# helpful video: https://www.youtube.com/watch?v=5o-kdjv7FD0
+d = {}
+def stepPerms(n):
+    """given number of stairs, return int number of ways can take stairs"""
+    # base cases
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    if n == 3:
+        return 4
+    if n not in d:
+        d[n] = stepPerms(n-1) + stepPerms(n-2) + stepPerms(n-3)
+    return d[n]
+    
+
+
+    
